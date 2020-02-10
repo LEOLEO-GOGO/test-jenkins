@@ -11,7 +11,7 @@ pipeline {
         sh "pwd"
         sh "ls -la"
         sh "rm -rf $TMP_PATH"
-        sh "mkdir $TMP_PATH"
+        sh "mkdir -p $TMP_PATH"
         sh "cp -R . $TMP_PATH"
         sh "ls -la $TMP_PATH"
 
