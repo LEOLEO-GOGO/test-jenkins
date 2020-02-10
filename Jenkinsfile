@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Prepare') {
       environment {
-        TMP_PATH="$JENKINS_HOME/BUILD_TMP/$JOB_NAME/$GIT_BRANCH/gproc-asset-app/"
+        TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$JOB_NAME/"
       }
       steps {
         sh "echo $GIT_BRANCH"
