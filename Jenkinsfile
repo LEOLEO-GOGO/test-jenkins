@@ -1,10 +1,9 @@
 pipeline {
   agent any
-  stages {
-    environment {
+  environment {
     TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
-    }
-
+  }
+  stages {
     stage('Prepare') {
       steps {
         sh "echo $GIT_BRANCH"
