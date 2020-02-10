@@ -1,10 +1,11 @@
 pipeline {
   agent any
   stages {
+    environment {
+    TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
+    }
+
     stage('Prepare') {
-      environment {
-        TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
-      }
       steps {
         sh "echo $GIT_BRANCH"
         sh "echo $WORKSPACE"
@@ -19,6 +20,16 @@ pipeline {
           sh "echo $GIT_BRANCH"
           sh "pwd"
           sh "ls -la"
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        withAnt(installation: 'gproc-ant') {
+          dir("$TMP_PATH/testproject") {
+            sh "ant echo"
+          }
         }
       }
     }
