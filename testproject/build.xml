@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="test" default="echo" basedir=".">
+
+	<!-- ビルドフォルダを初期化する -->
+	<target name="echo" depends="">
+		<echo message="test echo successed" />
+	</target>
+
+</project>
