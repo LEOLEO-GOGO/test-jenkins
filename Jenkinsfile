@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Prepare') {
       environment {
-        TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$JOB_NAME/"
+        TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
       }
       steps {
         sh "echo $GIT_BRANCH"
