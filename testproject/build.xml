@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="test" default="echo" basedir=".">
+<project name="test" default="jar" basedir=".">
 
     <property name="classes.dir" value="${basedir}/bin" />
 	<property name="src.dir" value="${basedir}/src" />
