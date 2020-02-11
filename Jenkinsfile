@@ -27,7 +27,7 @@ pipeline {
       steps {
         withAnt(installation: 'gproc-ant') {
           dir("$TMP_PATH/testproject") {
-            sh "ant echo"
+            sh "ant jar"
           }
         }
       }
