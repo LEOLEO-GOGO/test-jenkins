@@ -2,9 +2,49 @@
 
 <project name="test" default="echo" basedir=".">
 
+    <property name="classes.dir" value="${basedir}/bin" />
+	<property name="src.dir" value="${basedir}/src" />
+    <property name="jar.name" value="test.jar" />
+
 	<!-- ビルドフォルダを初期化する -->
 	<target name="echo" depends="">
 		<echo message="test echo successed" />
+	</target>
+
+	<!-- ****ターゲット**** -->
+	<!-- ビルドフォルダをクリアする -->
+	<target name="clean">
+		<delete dir="bin"/>
+		<delete dir="libs"/>
+		<echo message="ビルドフォルダをクリスしました。" />
+	</target>
+	
+	<!-- ビルドフォルダを初期化する -->
+	<target name="init" depends="clean">
+		<echo message="${ant.project.name}ビルド開始。" />
+		<mkdir dir="bin" />
+		<mkdir dir="libs" />
+		<echo message="java version : ${ant.java.version}" />
+		<echo message="ant version: ${ant.version}" />
+		<!-- タイムスタンプを作成する -->
+		<tstamp />
+	</target>
+
+	<!-- コンパイル -->
+    <target name="compile" depends="init" description="">
+		<!-- コンパイルjavaソース -->
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" deprecation="on" optimize="off" includes="**" includeAntRuntime="false">
+        </javac>
+    </target>
+
+	<!-- jarファイルの作成 -->
+    <target name="jar" depends="compile">
+    	<jar basedir="${classes.dir}" destfile="dist/${jar.name}">
+    		<manifest>
+				<attribute name="Built-By" value="${user.name}(${DSTAMP}-${TSTAMP})" />
+			</manifest>
+    	</jar>
+		<echo>libs/${jar.name} outputed</echo>
 	</target>
 
 </project>
