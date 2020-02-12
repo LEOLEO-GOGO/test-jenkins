@@ -1,10 +1,8 @@
 pipeline {
   agent any
-  parameters{
-    string(name:'test-report-path', defaultValue: 'reports/**/*.xml', description: ' SVN代码路径')
-  }
   environment {
-    TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
+    BUILD_WORK_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
+    TEST_RESULT_FILES="reports/*.xml"
   }
   stages {
     stage('Prepare') {
@@ -13,12 +11,12 @@ pipeline {
         sh "echo $WORKSPACE"
         sh "pwd"
         sh "ls -la"
-        sh "rm -rf $TMP_PATH"
-        sh "mkdir -p $TMP_PATH"
-        sh "cp -R . $TMP_PATH"
-        sh "ls -la $TMP_PATH"
+        sh "rm -rf $BUILD_WORK_PATH"
+        sh "mkdir -p $BUILD_WORK_PATH"
+        sh "cp -R . $BUILD_WORK_PATH"
+        sh "ls -la $BUILD_WORK_PATH"
 
-        dir("$TMP_PATH") {
+        dir("$BUILD_WORK_PATH") {
           sh "echo $GIT_BRANCH"
           sh "pwd"
           sh "ls -la"
@@ -29,7 +27,7 @@ pipeline {
     stage('Build') {
       steps {
         withAnt(installation: 'gproc-ant') {
-          dir("$TMP_PATH/testproject") {
+          dir("$BUILD_WORK_PATH/testproject") {
             sh "ant jar"
           }
         }
@@ -39,9 +37,9 @@ pipeline {
     stage('Test') {
       steps {
         withAnt(installation: 'gproc-ant') {
-          dir("$TMP_PATH/testproject-test") {
+          dir("$BUILD_WORK_PATH/testproject-test") {
             sh "ant -buildfile build_test.xml test"
-            archiveArtifacts params.test-report-path
+            archiveArtifacts "$TEST_RESULT_FILES"
           }
         }
       }
