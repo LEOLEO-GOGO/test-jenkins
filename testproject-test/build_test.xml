@@ -17,7 +17,7 @@
 	<fileset id="jar.test-target" dir="${test-target.location}/libs">
 		<include name="**/*.jar"/>
 	</fileset>
-	<fileset id="libs.gproc-libs-jacoco" dir="${gproc-libs.location}/jacoco">
+	<fileset id="libs.gproc-libs-jacoco" dir="${gproc-libs.location}">
 		<include name="jacocoagent.jar"/>
 		<include name="jacocoant.jar"/>
 		<include name="org.jacoco.core-0.7.9.201702052155.jar"/>
