@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters{
-    string(name:'test-report-path', defaultValue: 'testproject-test/reports/**/*.xml', description: ' SVN代码路径')
+    string(name:'test-report-path', defaultValue: 'reports/**/*.xml', description: ' SVN代码路径')
   }
   environment {
     TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
