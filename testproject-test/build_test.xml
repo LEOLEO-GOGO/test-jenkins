@@ -9,7 +9,7 @@
 	<property name="gproc-libs.location" value="libs" />
 	<property name="test-target.location" value="../../test-jenkins/testproject" />
 
-	<fileset id="libs.gproc-libs-JUnit" dir="${gproc-libs.location}/JUnit">
+	<fileset id="libs.gproc-libs-JUnit" dir="${gproc-libs.location}">
 		<include name="junit.jar"/>
 		<include name="org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
 	</fileset>
