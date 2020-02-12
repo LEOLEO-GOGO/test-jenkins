@@ -55,8 +55,19 @@ pipeline {
         }
       }
       steps {
-        echo "Hello, ${PERSON}, nice to meet you."
+        echo "Hello, ${PERSON}, nice to meet you.I am kamada"
       }
     }
+  }
+
+  post {
+      always {
+          echo "pipeline over!"
+		  sh "ls -al ${env.WORKSPACE}"
+          sh "ls -la $BUILD_WORK_PATH"
+		  deleteDir()
+	      sh "ls -al ${env.WORKSPACE}"
+          sh "ls -la $BUILD_WORK_PATH"
+      }
   }
 }
