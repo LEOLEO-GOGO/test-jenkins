@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     BUILD_WORK_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
-    TEST_RESULT_FILES="reports/*.xml"
+    TEST_RESULT_FILES="reports/**"
   }
   stages {
     stage('Prepare') {
