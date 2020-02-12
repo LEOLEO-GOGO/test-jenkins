@@ -33,5 +33,15 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        withAnt(installation: 'gproc-ant') {
+          dir("$TMP_PATH/testproject-test") {
+            sh "ant -buildfile build_test.xml test"
+          }
+        }
+      }
+    }
+
   }
 }

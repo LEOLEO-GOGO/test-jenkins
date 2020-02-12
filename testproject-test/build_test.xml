@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="testproject" default="test" basedir=".">
+
+	<!-- ****プロパティ**** -->
+	<property name="classes.dir" value="${basedir}/bin" />
+	<property name="reports.dir" value="${basedir}/reports" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="gproc-libs.location" value="libs" />
+	<property name="test-target.location" value="../../test-jenkins/testproject" />
+
+	<fileset id="libs.gproc-libs-JUnit" dir="${gproc-libs.location}/JUnit">
+		<include name="junit.jar"/>
+		<include name="org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+	</fileset>
+	<fileset id="jar.test-target" dir="${test-target.location}/libs">
+		<include name="**/*.jar"/>
+	</fileset>
+		
+	<!-- ****パス**** -->
+	<path id="dependency.libs">
+		<fileset refid="libs.gproc-libs-JUnit"/>
+		<fileset refid="jar.test-target"/>
+
+		<pathelement path="${classes.dir}"/>
+    </path>
+
+	<!-- ****ターゲット**** -->
+	<!-- ビルドフォルダをクリアする -->
+	<target name="clean">
+		<delete dir="${reports.dir}"/>
+		<delete dir="${classes.dir}"/>
+		<echo message="ビルドフォルダをクリスしました。" />
+	</target>
+	
+	<!-- ビルドフォルダを初期化する -->
+	<target name="init" depends="clean">
+		<echo message="${ant.project.name}ビルド開始。" />
+		<mkdir dir="${reports.dir}" />
+		<mkdir dir="${classes.dir}"/>
+		<echo message="java version : ${ant.java.version}" />
+		<echo message="ant version: ${ant.version}" />
+		<!-- タイムスタンプを作成する -->
+		<tstamp />
+	</target>
+
+	<!-- テスト対象プロジェクトのcompileを行う -->
+	<target name="jar-test-target">
+        <ant antfile="build.xml" dir="${test-target.location}" inheritAll="false" target="jar"/>
+    </target>
+
+	<!-- コンパイル -->
+    <target name="compile" depends="init,jar-test-target" description="">
+    	<!-- コピーnon-javaリソース -->
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}" excludes="**/*.java" />
+		</copy>
+		<!-- コンパイルjavaソース -->
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" deprecation="on" optimize="off" includes="**" includeAntRuntime="false">
+            <classpath refid="dependency.libs" />
+        </javac>
+    </target>
+
+	<!-- jarファイルの作成 -->
+	<target name="test" depends="compile">
+		<junit printsummary="true" fork="true">
+			<formatter type="xml" usefile="true"/>
+			<classpath refid="dependency.libs" />
+			<batchtest fork="on" todir="${reports.dir}" haltonfailure="no">
+				<fileset dir="${classes.dir}">
+					<include name="**/*Test.class"/>
+				</fileset>
+			</batchtest>   
+		</junit>
+	</target>
+
+</project>
