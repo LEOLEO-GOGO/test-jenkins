@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="testproject" default="test" basedir=".">
+<project name="testproject" default="test" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
 	<!-- ****プロパティ**** -->
 	<property name="classes.dir" value="${basedir}/bin" />
 	<property name="reports.dir" value="${basedir}/reports" />
+	<property name="reports.raw.dir" value="${basedir}/reports/raw" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="gproc-libs.location" value="libs" />
 	<property name="test-target.location" value="../../test-jenkins/testproject" />
@@ -16,10 +17,17 @@
 	<fileset id="jar.test-target" dir="${test-target.location}/libs">
 		<include name="**/*.jar"/>
 	</fileset>
-		
+	<fileset id="libs.gproc-libs-jacoco" dir="${gproc-libs.location}/jacoco">
+		<include name="jacocoagent.jar"/>
+		<include name="jacocoant.jar"/>
+		<include name="org.jacoco.core-0.7.9.201702052155.jar"/>
+		<include name="org.jacoco.report-0.7.9.201702052155.jar"/>
+	</fileset>
+
 	<!-- ****パス**** -->
 	<path id="dependency.libs">
 		<fileset refid="libs.gproc-libs-JUnit"/>
+		<fileset refid="libs.gproc-libs-jacoco"/>
 		<fileset refid="jar.test-target"/>
 
 		<pathelement path="${classes.dir}"/>
@@ -61,17 +69,42 @@
         </javac>
     </target>
 
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath refid="dependency.libs" />
+    </taskdef>
+
 	<!-- jarファイルの作成 -->
 	<target name="test" depends="compile">
-		<junit printsummary="true" fork="true">
-			<formatter type="xml" usefile="true"/>
-			<classpath refid="dependency.libs" />
-			<batchtest fork="on" todir="${reports.dir}" haltonfailure="no">
-				<fileset dir="${classes.dir}">
-					<include name="**/*Test.class"/>
-				</fileset>
-			</batchtest>   
-		</junit>
+		<jacoco:coverage destfile="${reports.raw.dir}/jacoco.exec">
+			<junit printsummary="true" fork="true">
+				<formatter type="xml" usefile="true"/>
+				<classpath refid="dependency.libs" />
+				<batchtest fork="on" todir="${reports.dir}" haltonfailure="no">
+					<fileset dir="${classes.dir}">
+						<include name="**/*Test.class"/>
+					</fileset>
+				</batchtest>   
+			</junit>
+		</jacoco:coverage>
 	</target>
+
+	<target name="report" depends="test">
+        <jacoco:report>
+            <executiondata>
+                <file file="${reports.raw.dir}/jacoco.exec" />
+            </executiondata>
+            <structure name="JUnit Result">
+                <classfiles>
+                    <fileset dir="${classes.dir}" />
+                </classfiles>
+                <sourcefiles encoding="UTF-8">
+                    <fileset dir="${src.dir}" />
+                </sourcefiles>
+            </structure>
+            <html destdir="${reports.dir}" />
+            <csv destfile="${reports.dir}/report.csv" />
+            <xml destfile="${reports.dir}/report.xml" />
+        </jacoco:report>
+    </target>
 
 </project>

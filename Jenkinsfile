@@ -38,7 +38,7 @@ pipeline {
       steps {
         withAnt(installation: 'gproc-ant') {
           dir("$BUILD_WORK_PATH/testproject-test") {
-            sh "ant -buildfile build_test.xml test"
+            sh "ant -buildfile build_test.xml report"
             archiveArtifacts "$TEST_RESULT_FILES"
           }
         }
