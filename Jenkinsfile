@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  parameters{
+    string(name:'test-report-path', defaultValue: 'testproject-test/reports/**/*.xml', description: ' SVN代码路径')
+  }
   environment {
     TMP_PATH="$JENKINS_HOME/BUILD_TMP/$GIT_BRANCH/$BUILD_NUMBER/test-jenkins"
   }
@@ -38,6 +41,7 @@ pipeline {
         withAnt(installation: 'gproc-ant') {
           dir("$TMP_PATH/testproject-test") {
             sh "ant -buildfile build_test.xml test"
+            archiveArtifacts params.test-report-path
           }
         }
       }
