@@ -95,10 +95,10 @@
             </executiondata>
             <structure name="JUnit Result">
                 <classfiles>
-                    <fileset dir="${classes.dir}" />
+                    <fileset dir="${test-target.location}/bin" />
                 </classfiles>
                 <sourcefiles encoding="UTF-8">
-                    <fileset dir="${src.dir}" />
+                    <fileset dir="${test-target.location}/src" />
                 </sourcefiles>
             </structure>
             <html destdir="${reports.dir}" />
