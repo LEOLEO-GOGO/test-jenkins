@@ -79,7 +79,7 @@
 			<junit printsummary="true" fork="true">
 				<formatter type="xml" usefile="true"/>
 				<classpath refid="dependency.libs" />
-				<batchtest fork="on" todir="${reports.dir}" haltonfailure="no">
+				<batchtest fork="on" todir="${reports.raw.dir}" haltonfailure="no">
 					<fileset dir="${classes.dir}">
 						<include name="**/*Test.class"/>
 					</fileset>

@@ -40,7 +40,7 @@ pipeline {
           dir("$BUILD_WORK_PATH/testproject-test") {
             sh "ant -buildfile build_test.xml report"
             archiveArtifacts "$TEST_RESULT_FILES"
-            junit "reports/raw/*.xml"
+            junit "reports/raw/TEST-*.xml"
           }
         }
       }
