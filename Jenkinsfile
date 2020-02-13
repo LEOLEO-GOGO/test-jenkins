@@ -43,10 +43,13 @@ pipeline {
             junit "reports/raw/TEST-*.xml"
           }
         }
+        
+        echo "test over"
         emailext attachLog: true,
                  subject: "Need Approval: $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                  body: "Integration is waiting for your approval: ${env.BUILD_URL}",
                  to: 'louzj@cn.ibm.com'
+        echo "mail over"
       }
     }
 
