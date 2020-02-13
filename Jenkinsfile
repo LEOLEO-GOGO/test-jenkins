@@ -47,13 +47,14 @@ pipeline {
     }
 
     stage('Example') {
+      mail to: 'louzj@ibm.com.cn',
+           subject: "Approval Need: ${currentBuild.fullDisplayName}",
+           body: "Integration is waiting for your approval: ${env.BUILD_URL}"
+
       input {
         message "Should we continue?"
         ok "Yes, we should."
         submitter "admin"
-        mail to: 'louzj@ibm.com.cn',
-             subject: "Approval Need: ${currentBuild.fullDisplayName}",
-             body: "Integration is waiting for your approval: ${env.BUILD_URL}"
         parameters {
             string(name: 'PERSON', defaultValue: 'Mr Anthony', description: 'Who should I say hello to?')
         }
@@ -65,18 +66,17 @@ pipeline {
   }
 
   post {
-      always {
-          echo "pipeline finished!"
-      }
-      success {
-          echo "build succeed! clean up build folder."
-          sh "rm -rf $BUILD_WORK_PATH"
-      }
-      failure {
-        mail to: 'louzj@ibm.com.cn',
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
-      }
+    always {
+        echo "pipeline finished!"
+    }
+    success {
+        echo "build succeed! clean up build folder."
+        sh "rm -rf $BUILD_WORK_PATH"
+    }
+    failure {
+    mail to: 'louzj@ibm.com.cn',
+            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+            body: "Something is wrong with ${env.BUILD_URL}"
     }
   }
 }
