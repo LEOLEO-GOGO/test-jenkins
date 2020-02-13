@@ -63,11 +63,9 @@ pipeline {
 
   post {
       always {
-          echo "pipeline over!"
-		  sh "ls -al ${env.WORKSPACE}"
+          echo "pipeline finished!"
           sh "ls -la $BUILD_WORK_PATH"
-		  deleteDir()
-	      sh "ls -al ${env.WORKSPACE}"
+		  deleteDir("$BUILD_WORK_PATH")
           sh "ls -la $BUILD_WORK_PATH"
       }
   }
