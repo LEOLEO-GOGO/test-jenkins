@@ -41,7 +41,7 @@ pipeline {
             sh "ant -buildfile build_test.xml report"
             archiveArtifacts "$TEST_RESULT_FILES"
             junit "reports/raw/TEST-*.xml"
-            jacoco "reports/raw/*.exec"
+            jacoco()
           }
         }
 
