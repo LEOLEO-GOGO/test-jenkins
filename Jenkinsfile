@@ -49,8 +49,8 @@ pipeline {
     stage('Approval') {
       steps {
         emailext attachLog: true,
+                 subject: "Need Approval: $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                  body: "Integration is waiting for your approval: ${env.BUILD_URL}",
-                 subject: "Approval Need: ${currentBuild.fullDisplayName}",
                  to: 'louzj@cn.ibm.com'
       }
 
@@ -82,8 +82,8 @@ pipeline {
     failure {
 
     emailext attachLog: true,
+             subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
              body: "Something is wrong with: ${env.BUILD_URL}",
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              to: 'louzj@cn.ibm.com'
     }
   }
