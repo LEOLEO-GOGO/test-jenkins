@@ -43,13 +43,11 @@ pipeline {
             junit "reports/raw/TEST-*.xml"
           }
         }
-        
-        echo "test over"
+
         emailext attachLog: true,
-                 subject: "Need Approval: $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                 subject: "Need Approval: $JOB_NAME - Build # $BUILD_NUMBER!",
                  body: "Integration is waiting for your approval: ${env.BUILD_URL}",
                  to: 'louzj@cn.ibm.com'
-        echo "mail over"
       }
     }
 
@@ -77,12 +75,10 @@ pipeline {
         sh "rm -rf $BUILD_WORK_PATH"
     }
     failure {
-      echo "pipeline failed2!"
       emailext attachLog: true,
-               subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+               subject: "Failed Build: $JOB_NAME - Build # $BUILD_NUMBER!",
                body: "Something is wrong with: ${env.BUILD_URL}",
                to: 'louzj@cn.ibm.com'
-       echo "mail send2!"
     }
   }
 }
