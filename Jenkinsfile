@@ -48,10 +48,10 @@ pipeline {
 
     stage('Integration') {
       steps {
-        mail to: 'louzj@ibm.com.cn',
-             subject: "Approval Need: ${currentBuild.fullDisplayName}",
-             body: "Integration is waiting for your approval: ${env.BUILD_URL}"
-
+        emailext attachLog: true,
+                 body: "Integration is waiting for your approval: ${env.BUILD_URL}",
+                 subject: "Approval Need: ${currentBuild.fullDisplayName}",
+                 to: 'louzj@cn.ibm.com'
         input {
             message "Should we continue?"
             ok "Yes, we should."
@@ -75,9 +75,11 @@ pipeline {
         sh "rm -rf $BUILD_WORK_PATH"
     }
     failure {
-    mail to: 'louzj@ibm.com.cn',
-            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-            body: "Something is wrong with ${env.BUILD_URL}"
+
+    emailext attachLog: true,
+             body: "Something is wrong with: ${env.BUILD_URL}",
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             to: 'louzj@cn.ibm.com'
     }
   }
 }
