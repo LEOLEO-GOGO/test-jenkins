@@ -42,11 +42,11 @@ pipeline {
             archiveArtifacts "$TEST_RESULT_FILES"
             junit "reports/raw/TEST-*.xml"
           }
-          emailext attachLog: true,
-                   subject: "Need Approval: $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-                   body: "Integration is waiting for your approval: ${env.BUILD_URL}",
-                   to: 'louzj@cn.ibm.com'
         }
+        emailext attachLog: true,
+                 subject: "Need Approval: $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                 body: "Integration is waiting for your approval: ${env.BUILD_URL}",
+                 to: 'louzj@cn.ibm.com'
       }
     }
 
