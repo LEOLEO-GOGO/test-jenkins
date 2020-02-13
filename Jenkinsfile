@@ -46,20 +46,21 @@ pipeline {
       }
     }
 
-    stage('Example') {
-      mail to: 'louzj@ibm.com.cn',
-           subject: "Approval Need: ${currentBuild.fullDisplayName}",
-           body: "Integration is waiting for your approval: ${env.BUILD_URL}"
-
-      input {
-        message "Should we continue?"
-        ok "Yes, we should."
-        submitter "admin"
-        parameters {
-            string(name: 'PERSON', defaultValue: 'Mr Anthony', description: 'Who should I say hello to?')
-        }
-      }
+    stage('Integration') {
       steps {
+        mail to: 'louzj@ibm.com.cn',
+             subject: "Approval Need: ${currentBuild.fullDisplayName}",
+             body: "Integration is waiting for your approval: ${env.BUILD_URL}"
+
+        input {
+            message "Should we continue?"
+            ok "Yes, we should."
+            submitter "admin"
+            parameters {
+                string(name: 'PERSON', defaultValue: 'Mr Anthony', description: 'Who should I say hello to?')
+            }
+        }
+
         echo "Hello, ${PERSON}, nice to meet you.I am kamada"
       }
     }
