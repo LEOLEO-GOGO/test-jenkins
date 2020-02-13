@@ -50,7 +50,7 @@ pipeline {
       }
     }
 
-    stage('Approval') {
+    stage('Integration') {
       input {
         message "Should we continue?"
         ok "Yes, we should."
@@ -59,9 +59,6 @@ pipeline {
             string(name: 'PERSON', defaultValue: 'Mr Anthony', description: 'Who should I say hello to?')
         }
       }
-    }
-
-    stage('Integration') {
       steps {
         echo "do Integration!"
       }
