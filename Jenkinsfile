@@ -77,12 +77,12 @@ pipeline {
         sh "rm -rf $BUILD_WORK_PATH"
     }
     failure {
-      echo "pipeline failed!"
+      echo "pipeline failed2!"
       emailext attachLog: true,
                subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                body: "Something is wrong with: ${env.BUILD_URL}",
                to: 'louzj@cn.ibm.com'
-       echo "mail send!"
+       echo "mail send2!"
     }
   }
 }
