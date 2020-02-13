@@ -69,6 +69,7 @@ pipeline {
         echo "do Integration!"
       }
     }
+  }
 
   post {
     always {
