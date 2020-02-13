@@ -46,7 +46,7 @@ pipeline {
       }
     }
 
-    stage('Integration') {
+    stage('Approval') {
       steps {
         emailext attachLog: true,
                  body: "Integration is waiting for your approval: ${env.BUILD_URL}",
@@ -62,12 +62,13 @@ pipeline {
             string(name: 'PERSON', defaultValue: 'Mr Anthony', description: 'Who should I say hello to?')
         }
       }
+    }
 
+    stage('Integration') {
       steps {
-        echo "Hello, ${PERSON}, nice to meet you.I am kamada"
+        echo "do Integration!"
       }
     }
-  }
 
   post {
     always {
