@@ -41,6 +41,7 @@ pipeline {
             sh "ant -buildfile build_test.xml report"
             archiveArtifacts "$TEST_RESULT_FILES"
             junit "reports/raw/TEST-*.xml"
+            jacoco "reports/raw/*.exec"
           }
         }
 
@@ -76,7 +77,7 @@ pipeline {
     }
     failure {
       emailext attachLog: true,
-               subject: "Failed Build: $JOB_NAME - Build # $BUILD_NUMBER!",
+               subject: "Build Failed: $JOB_NAME - Build # $BUILD_NUMBER!",
                body: "Something is wrong with: ${env.BUILD_URL}",
                to: 'louzj@cn.ibm.com'
     }
