@@ -7,6 +7,7 @@ pipeline {
   stages {
     stage('Prepare') {
       steps {
+        sh "echo isFromUpStream: ${params.triggeredByUpstream}"
         sh "echo $GIT_BRANCH"
         sh "echo $WORKSPACE"
         sh "pwd"
