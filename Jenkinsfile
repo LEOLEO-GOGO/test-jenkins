@@ -71,6 +71,7 @@ pipeline {
   post {
     always {
         echo "pipeline finished!"
+        sh "echo isFromUpStream: ${params.triggeredByUpstream}"
     }
     success {
         echo "build succeed! clean up build folder."
