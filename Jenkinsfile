@@ -18,8 +18,8 @@ pipeline {
 
         dir("$BUILD_TEMP_WORK_PATH2") {
           git branch: 'testJenkins',
-            credentialsId: 'test-jenkins-github',
-            url: 'https://github.com/LEOLEO-GOGO/test-jenkins.git'
+            credentialsId: 'test-jenkins',
+            url: 'https://github.com/LEOLEO-GOGO/testjenkins2.git'
 
           sh "ls -la $BUILD_TEMP_WORK_PATH2"
         }
