@@ -8,33 +8,24 @@ pipeline {
 
   stages {
     stage('Pull Dependency') {
+      
+      when { expression { return ${params.triggeredByUpstream} == null } }
+
       steps {
-        echo "changesets: ${currentBuild.changeSets}"
-        // if () {
-        //   git branch: 'testJenkins',
-        //     credentialsId: 'test-jenkins-github',
-        //     url: 'https://github.com/LEOLEO-GOGO/test-jenkins.git'
-        // }
+        sh "pull deopendency project start."
+        sh "rm -rf $BUILD_TEMP_WORK_PATH2"
+        sh "mkdir -p $BUILD_TEMP_WORK_PATH2"
 
-        sh "echo isFromUpStream: ${params.triggeredByUpstream}"
-        sh "echo $GIT_BRANCH"
-        sh "echo $WORKSPACE"
-        sh "pwd"
-        sh "ls -la"
-        sh "rm -rf $BUILD_TEMP_WORK_PATH"
-        sh "mkdir -p $BUILD_TEMP_WORK_PATH"
-        sh "cp -R . $BUILD_TEMP_WORK_PATH"
-        sh "ls -la $BUILD_TEMP_WORK_PATH"
+        dir("$BUILD_TEMP_WORK_PATH2") {
+          git branch: 'testJenkins',
+            credentialsId: 'test-jenkins-github',
+            url: 'https://github.com/LEOLEO-GOGO/test-jenkins.git'
 
-        dir("$BUILD_TEMP_WORK_PATH") {
-          sh "echo $GIT_BRANCH"
-          sh "pwd"
-          sh "ls -la"
+          sh "ls -la $BUILD_TEMP_WORK_PATH2"
         }
       }
     }
 
-  stages {
     stage('Prepare') {
       steps {
         sh "echo isFromUpStream: ${params.triggeredByUpstream}"
