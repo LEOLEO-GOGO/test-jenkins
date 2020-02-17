@@ -12,7 +12,7 @@ pipeline {
       when { expression { return params.triggeredByUpstream != true } }
 
       steps {
-        sh "pull deopendency project start."
+        sh "echo pulldeopendency project start."
         sh "rm -rf $BUILD_TEMP_WORK_PATH2"
         sh "mkdir -p $BUILD_TEMP_WORK_PATH2"
 
