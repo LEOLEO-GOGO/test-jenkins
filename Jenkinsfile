@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Pull Dependency') {
       
-      when { expression { return ${params.triggeredByUpstream} == null } }
+      when { expression { return params.triggeredByUpstream != true } }
 
       steps {
         sh "pull deopendency project start."
