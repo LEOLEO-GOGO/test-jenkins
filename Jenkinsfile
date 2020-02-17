@@ -17,7 +17,7 @@ pipeline {
         sh "mkdir -p $BUILD_TEMP_WORK_PATH2"
 
         dir("$BUILD_TEMP_WORK_PATH2") {
-          git branch: 'testJenkins',
+          git branch: 'master',
             credentialsId: 'test-jenkins-openshift',
             url: 'https://github.com/LEOLEO-GOGO/testjenkins2.git'
 
